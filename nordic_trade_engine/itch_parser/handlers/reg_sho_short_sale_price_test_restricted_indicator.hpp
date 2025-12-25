@@ -1,7 +1,7 @@
 #pragma once
 #include "types.hpp"
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct REG_SHO_SHORT_SALE_PRICE_TEST_RESTRICTED_INDICATOR
 {
 	char message_type;
@@ -11,7 +11,7 @@ struct REG_SHO_SHORT_SALE_PRICE_TEST_RESTRICTED_INDICATOR
 	char stock[8];
 	char reg_sho_action;
 };
-#pragma pop
+#pragma pack(pop)
 
 namespace reg_sho_short_sale_price_test_restricted_indicator
 {

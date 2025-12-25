@@ -21,7 +21,7 @@ struct uint48_t
             ((uint64_t)data[5]);
     }
 };
-#pragma pop
+#pragma pack(pop)
 
 #pragma pack(push, 1)
 struct ITCHPrice4
@@ -34,7 +34,7 @@ struct ITCHPrice4
         return std::make_pair<uint32_t, uint32_t>(host_price / 10000, host_price % 10000);
     }
 };
-#pragma pop
+#pragma pack(pop)
 
 #pragma pack(push, 1)
 struct ITCHPrice8

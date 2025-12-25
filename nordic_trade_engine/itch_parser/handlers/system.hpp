@@ -10,7 +10,7 @@ struct SYSTEM_MESSAGE
 	uint48_t timestamp;
 	char event_code;
 };
-#pragma pop
+#pragma pack(pop)
 
 namespace system_message
 {

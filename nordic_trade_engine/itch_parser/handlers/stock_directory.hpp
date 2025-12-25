@@ -1,5 +1,6 @@
 #pragma once
 #include "types.hpp"
+#include "includes.h"
 
 #pragma pack(push, 1)
 struct STOCK_DIRECTORY_MESSAGE
@@ -23,12 +24,13 @@ struct STOCK_DIRECTORY_MESSAGE
 	uint32_t etp_leverage_factor;
 	char inverse_indicator;
 };
-#pragma pop
+#pragma pack(pop)
 
 namespace stock_directory_message
 {
 	static __forceinline void on_stock_directory_message(const char* frame)
 	{
-		return;
+		const STOCK_DIRECTORY_MESSAGE* stock_directory = reinterpret_cast<const STOCK_DIRECTORY_MESSAGE*>(frame);
+		_::market.register_stock(stock_directory->stock_locate,stock_directory->stock);
 	}
 }

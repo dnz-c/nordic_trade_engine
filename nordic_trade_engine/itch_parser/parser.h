@@ -1,7 +1,5 @@
 #pragma once
-#include <Windows.h>
-#include <iostream>
-#include <chrono>
+#include "includes.h"
 
 #include "handlers/system.hpp"
 #include "handlers/stock_directory.hpp"
@@ -26,8 +24,20 @@ static __forceinline void handler_unknown(const char* frame)
 typedef void (*t_handler)(const char*);
 static t_handler handler_list[256];
 
-namespace itch_parser
+class ITCH_PARSER
 {
-	bool init_parser();
-	void run_parser(const wchar_t* path);
-}
+private:
+	HANDLE file;
+	HANDLE mapped_file;
+	char* buf;
+
+	t_handler handler_list[256];
+	const wchar_t* itch_file;
+
+public:
+	ITCH_PARSER(const wchar_t* path);
+	~ITCH_PARSER();
+
+public:
+	void run();
+};

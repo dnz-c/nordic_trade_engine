@@ -1,7 +1,7 @@
 #pragma once
 #include "types.hpp"
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct STOCK_TRADING_ACTION_MESSAGE
 {
 	char message_type;
@@ -13,7 +13,7 @@ struct STOCK_TRADING_ACTION_MESSAGE
 	char reserved;
 	char reason[4];
 };
-#pragma pop
+#pragma pack(pop)
 
 namespace stock_trading_action_message
 {

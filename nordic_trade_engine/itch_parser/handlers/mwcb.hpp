@@ -1,7 +1,7 @@
 #pragma once
 #include "types.hpp"
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct MWCB_DECLINE_LEVEL_MESSAGE
 {
 	char message_type;
@@ -12,9 +12,9 @@ struct MWCB_DECLINE_LEVEL_MESSAGE
 	ITCHPrice8 level2;
 	ITCHPrice8 level3;
 };
-#pragma pop
+#pragma pack(pop)
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct MWCB_STATUS_MESSAGE
 {
 	char message_type;
@@ -23,7 +23,7 @@ struct MWCB_STATUS_MESSAGE
 	uint48_t timestamp;
 	char breached_level;
 };
-#pragma pop
+#pragma pack(pop)
 
 namespace mwcb_decline_level
 {

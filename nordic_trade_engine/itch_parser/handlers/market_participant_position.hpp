@@ -1,7 +1,7 @@
 #pragma once
 #include "types.hpp"
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct MARKET_PARTICIPANT_POSITION_MESSAGE
 {
 	char message_type;
@@ -14,7 +14,7 @@ struct MARKET_PARTICIPANT_POSITION_MESSAGE
 	char market_maker_mode;
 	char market_participant_state;
 };
-#pragma pop
+#pragma pack(pop)
 
 namespace market_participant_position
 {

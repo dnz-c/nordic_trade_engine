@@ -1,7 +1,7 @@
 #pragma once
 #include "types.hpp"
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct LULD_ACTION_COLLAR
 {
 	char message_type;
@@ -14,7 +14,7 @@ struct LULD_ACTION_COLLAR
 	ITCHPrice4 lower_auction_collar_price;
 	uint32_t auction_collar_extension;
 };
-#pragma pop
+#pragma pack(pop)
 
 namespace luld_action_collar
 {

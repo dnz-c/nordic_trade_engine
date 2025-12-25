@@ -1,7 +1,7 @@
 #pragma once
 #include "types.hpp"
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct OPERATIONAL_HALT
 {
 	char message_type;
@@ -12,7 +12,7 @@ struct OPERATIONAL_HALT
 	char market_code;
 	char operational_halt_action;
 };
-#pragma pop
+#pragma pack(pop)
 
 namespace operational_halt
 {

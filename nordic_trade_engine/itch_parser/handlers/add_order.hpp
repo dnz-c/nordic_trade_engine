@@ -1,7 +1,7 @@
 #pragma once
 #include "types.hpp"
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct ADD_ORDER_NO_MPID
 {
 	char message_type;
@@ -14,9 +14,9 @@ struct ADD_ORDER_NO_MPID
 	char stock[8];
 	ITCHPrice4 price;
 };
-#pragma pop
+#pragma pack(pop)
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct ADD_ORDER_MPID
 {
 	char message_type;
@@ -30,7 +30,7 @@ struct ADD_ORDER_MPID
 	ITCHPrice4 price;
 	char attribution[4];
 };
-#pragma pop
+#pragma pack(pop)
 
 namespace add_order_no_mpid
 {

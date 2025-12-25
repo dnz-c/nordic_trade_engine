@@ -1,7 +1,7 @@
 #pragma once
 #include "types.hpp"
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct BROKEN_TRADE
 {
 	char message_type;
@@ -10,9 +10,9 @@ struct BROKEN_TRADE
 	uint48_t timestamp;
 	uint64_t match_number;
 };
-#pragma pop
+#pragma pack(pop)
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct NOII
 {
 	char message_type;
@@ -30,7 +30,7 @@ struct NOII
 	char price_variation_indicator;
 
 };
-#pragma pop
+#pragma pack(pop)
 
 namespace broken_trade
 {

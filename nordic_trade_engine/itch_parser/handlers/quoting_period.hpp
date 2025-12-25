@@ -1,7 +1,7 @@
 #pragma once
 #include "types.hpp"
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct IPO_QUOTING_PERIOD_UPDATE_MESSAGE
 {
 	char message_type;
@@ -13,7 +13,7 @@ struct IPO_QUOTING_PERIOD_UPDATE_MESSAGE
 	char ipo_quotation_release_qualifier;
 	ITCHPrice4 ipo_price;
 };
-#pragma pop
+#pragma pack(pop)
 
 namespace ipo_quoting_period_update
 {

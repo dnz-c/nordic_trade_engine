@@ -2,7 +2,7 @@
 #include "types.hpp"
 #include <iostream>
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct EXECUTED_ORDER
 {
 	char message_type;
@@ -13,9 +13,9 @@ struct EXECUTED_ORDER
 	uint32_t executed_shares;
 	uint64_t match_number;
 };
-#pragma pop
+#pragma pack(pop)
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct EXECUTED_ORDER_PRICE_MESSAGE
 {
 	char message_type;
@@ -28,9 +28,9 @@ struct EXECUTED_ORDER_PRICE_MESSAGE
 	char printable;
 	ITCHPrice4 execution_price;
 };
-#pragma pop
+#pragma pack(pop)
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct CANCELLED_ORDER
 {
 	char message_type;
@@ -40,9 +40,9 @@ struct CANCELLED_ORDER
 	uint64_t order_reference_number;
 	uint32_t cancelled_shared;
 };
-#pragma pop
+#pragma pack(pop)
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct DELETED_ORDER
 {
 	char message_type;
@@ -51,9 +51,9 @@ struct DELETED_ORDER
 	uint48_t timestamp;
 	uint64_t order_reference_number;
 };
-#pragma pop
+#pragma pack(pop)
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct REPLACE_ORDER
 {
 	char message_type;
@@ -65,7 +65,7 @@ struct REPLACE_ORDER
 	uint32_t shares;
 	ITCHPrice4 price;
 };
-#pragma pop
+#pragma pack(pop)
 
 namespace executed_order
 {

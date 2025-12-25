@@ -1,7 +1,7 @@
 #pragma once
 #include "types.hpp"
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct DIRECT_LISTING_WITH_CAPITAL_RAISE_PRICE_DISCOVERY
 {
 	char message_type;
@@ -17,7 +17,7 @@ struct DIRECT_LISTING_WITH_CAPITAL_RAISE_PRICE_DISCOVERY
 	ITCHPrice4 lower_price_range_collar;
 	ITCHPrice4 upper_price_range_collar;
 };
-#pragma pop
+#pragma pack(pop)
 
 namespace direct_listing_with_capital_raise_price_discovery
 {

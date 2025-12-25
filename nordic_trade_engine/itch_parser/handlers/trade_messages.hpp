@@ -1,7 +1,7 @@
 #pragma once
 #include "types.hpp"
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct TRADE_MESSAGE
 {
 	char message_type;
@@ -15,9 +15,9 @@ struct TRADE_MESSAGE
 	ITCHPrice4 price;
 	uint64_t match_number;
 };
-#pragma pop
+#pragma pack(pop)
 
-#pragma push(pack, 1)
+#pragma pack(push, 1)
 struct CROSS_TRADE_MESSAGE
 {
 	char message_type;
@@ -32,7 +32,7 @@ struct CROSS_TRADE_MESSAGE
 	uint64_t match_number;
 	char cross_type;
 };
-#pragma pop
+#pragma pack(pop)
 
 namespace trade_message
 {
