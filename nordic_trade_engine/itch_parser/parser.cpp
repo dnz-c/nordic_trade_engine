@@ -3,6 +3,8 @@
 ITCH_PARSER::ITCH_PARSER(const wchar_t* path) 
     : buf(nullptr), file(NULL), mapped_file(NULL)
 {
+    fs.QuadPart = 0;
+
     for (int i = 0; i < 256; i++)
     {
         handler_list[i] = handler_unknown;

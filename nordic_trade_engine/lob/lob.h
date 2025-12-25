@@ -5,7 +5,7 @@
 
 struct LIMIT_LEVEL;
 
-struct ORDER 
+struct ORDER
 {
     uint64_t id;
     uint64_t shares;
@@ -18,7 +18,6 @@ struct ORDER
 
 struct LIMIT_LEVEL 
 {
-    uint32_t price = 0;
     uint64_t total_volume = 0;
     ORDER* head = nullptr;
     ORDER* tail = nullptr;
@@ -179,7 +178,7 @@ public:
 
 class MARKET {
 private:
-    std::unordered_map<uint16_t, LIMIT_ORDER_BOOK*> books;
+    LIMIT_ORDER_BOOK* books[65536];
 
 public:
     void register_stock(uint16_t locate_id, const char* symbol);

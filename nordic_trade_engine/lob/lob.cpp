@@ -22,10 +22,7 @@ void MARKET::register_stock(uint16_t locate_id, const char* symbol)
 
 LIMIT_ORDER_BOOK* MARKET::get_book(uint16_t locate_id)
 {
-    if (books.find(locate_id) != books.end()) {
-        return books[locate_id];
-    }
-    return nullptr;
+    return books[locate_id];
 }
 
 void LIMIT_ORDER_BOOK::link_order(LIMIT_LEVEL& level, ORDER* order)
