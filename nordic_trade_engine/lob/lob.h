@@ -3,6 +3,8 @@
 #include <map>
 #include <unordered_map>
 
+struct LIMIT_LEVEL;
+
 struct ORDER 
 {
     uint64_t id;
@@ -10,6 +12,8 @@ struct ORDER
     uint32_t price;
     ORDER* next;
     ORDER* prev;
+    LIMIT_LEVEL* parent;
+    bool is_bid;
 };
 
 struct LIMIT_LEVEL 
@@ -45,8 +49,8 @@ public:
     {
         if (free_list.empty()) 
         {
-            throw std::runtime_error("OOM: Order Pool Exhausted");
             system("pause");
+            throw std::runtime_error("OOM: Order Pool Exhausted");
             exit(-10);
         }
         ORDER* o = free_list.back();
@@ -67,15 +71,18 @@ struct SIDE_ASK {};
 
 class LIMIT_ORDER_BOOK 
 {
+public:
+    std::unordered_map<uint64_t, ORDER*> order_map;
+
 private:
     ORDER_POOL& pool;
     std::string symbol;
-    std::unordered_map<uint64_t, ORDER*> order_map;
     std::map<uint32_t, LIMIT_LEVEL, std::greater<uint32_t>> bids;
     std::map<uint32_t, LIMIT_LEVEL> asks;
 
 private:
-    __forceinline void link_order(LIMIT_LEVEL& level, ORDER* order);
+    void link_order(LIMIT_LEVEL& level, ORDER* order);
+    void unlink_order(ORDER* o);
 
 public:
     LIMIT_ORDER_BOOK(std::string ticker, ORDER_POOL& p) : symbol(ticker), pool(p) {}
@@ -91,12 +98,14 @@ public:
         o->id = id;
         o->shares = shares;
         o->price = price;
+        o->is_bid = true;
 
         order_map[id] = o;
 
         LIMIT_LEVEL& level = bids[price];
+        o->parent = &level;
 
-        //link_order(level, o);
+        link_order(level, o);
     }
 
     template <>
@@ -107,12 +116,53 @@ public:
         o->id = id;
         o->shares = shares;
         o->price = price;
+        o->is_bid = false;
 
         order_map[id] = o;
 
         LIMIT_LEVEL& level = asks[price];
+        o->parent = &level;
 
-        //link_order(level, o);
+        link_order(level, o);
+    }
+    
+    template <typename SIDE>
+    void replace_order(ORDER* o, uint64_t old_id, uint64_t new_id, uint32_t new_shares, uint32_t new_price);
+
+    template<>
+    void replace_order<SIDE_BID>(ORDER* o, uint64_t old_id, uint64_t new_id, uint32_t new_shares, uint32_t new_price)
+    {
+        o->parent->total_volume -= o->shares;
+        unlink_order(o);
+
+        o->id = new_id;
+        o->shares = new_shares;
+        o->price = new_price;
+
+        order_map.erase(old_id);
+        order_map[new_id] = o;
+
+        LIMIT_LEVEL& level = bids[new_price];
+        o->parent = &level;
+        link_order(level, o);
+    }
+
+    template<>
+    void replace_order<SIDE_ASK>(ORDER* o, uint64_t old_id, uint64_t new_id, uint32_t new_shares, uint32_t new_price)
+    {
+        o->parent->total_volume -= o->shares;
+        unlink_order(o);
+
+        o->id = new_id;
+        o->shares = new_shares;
+        o->price = new_price;
+
+        order_map.erase(old_id);
+        order_map[new_id] = o;
+
+        LIMIT_LEVEL& level = asks[new_price];
+        o->parent = &level;
+        link_order(level, o);
     }
 
     void execute_order(uint64_t id, uint32_t executed_shares);

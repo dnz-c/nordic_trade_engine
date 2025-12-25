@@ -40,7 +40,6 @@ ITCH_PARSER::ITCH_PARSER(const wchar_t* path)
         return;
     }
 
-    LARGE_INTEGER fs;
     GetFileSizeEx(file, &fs);
 
     mapped_file = CreateFileMapping(file, NULL, PAGE_READONLY, 0, 0, NULL);
@@ -71,7 +70,7 @@ void ITCH_PARSER::run()
         return;
 
     char* cursor = buf;
-    char* end = buf + 0x40000000;//fs.QuadPart;
+    char* end = buf + 0x40000000;// fs.QuadPart;
 
     std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 

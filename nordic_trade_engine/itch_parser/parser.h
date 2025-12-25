@@ -27,6 +27,7 @@ static t_handler handler_list[256];
 class ITCH_PARSER
 {
 private:
+	LARGE_INTEGER fs;
 	HANDLE file;
 	HANDLE mapped_file;
 	char* buf;
