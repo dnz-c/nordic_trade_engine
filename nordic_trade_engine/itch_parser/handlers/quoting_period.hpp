@@ -5,13 +5,13 @@
 struct IPO_QUOTING_PERIOD_UPDATE_MESSAGE
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
 	char stock[8];
-	uint32_t ipo_quotation_release_time;
+	BigEndian<uint32_t> ipo_quotation_release_time;
 	char ipo_quotation_release_qualifier;
-	ITCHPrice4 ipo_price;
+	BigEndian<uint32_t> ipo_price;
 };
 #pragma pack(pop)
 

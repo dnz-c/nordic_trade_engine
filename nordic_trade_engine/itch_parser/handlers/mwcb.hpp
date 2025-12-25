@@ -5,12 +5,12 @@
 struct MWCB_DECLINE_LEVEL_MESSAGE
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
-	ITCHPrice8 level1;
-	ITCHPrice8 level2;
-	ITCHPrice8 level3;
+	BigEndian<uint64_t> level1;
+	BigEndian<uint64_t> level2;
+	BigEndian<uint64_t> level3;
 };
 #pragma pack(pop)
 
@@ -18,8 +18,8 @@ struct MWCB_DECLINE_LEVEL_MESSAGE
 struct MWCB_STATUS_MESSAGE
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
 	char breached_level;
 };

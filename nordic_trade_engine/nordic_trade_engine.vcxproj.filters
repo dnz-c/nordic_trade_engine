@@ -63,9 +63,6 @@
     <ClInclude Include="itch_parser\handlers\trade_messages.hpp">
       <Filter>itch_parser\handlers</Filter>
     </ClInclude>
-    <ClInclude Include="itch_parser\handlers\types.hpp">
-      <Filter>itch_parser\handlers</Filter>
-    </ClInclude>
     <ClInclude Include="itch_parser\parser.h">
       <Filter>itch_parser</Filter>
     </ClInclude>
@@ -73,5 +70,6 @@
       <Filter>lob</Filter>
     </ClInclude>
     <ClInclude Include="includes.h" />
+    <ClInclude Include="types.hpp" />
   </ItemGroup>
 </Project>

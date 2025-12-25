@@ -171,9 +171,9 @@
     <ClInclude Include="itch_parser\handlers\stock_trading_action.hpp" />
     <ClInclude Include="itch_parser\handlers\system.hpp" />
     <ClInclude Include="itch_parser\handlers\trade_messages.hpp" />
-    <ClInclude Include="itch_parser\handlers\types.hpp" />
     <ClInclude Include="itch_parser\parser.h" />
     <ClInclude Include="lob\lob.h" />
+    <ClInclude Include="types.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

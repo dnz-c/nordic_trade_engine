@@ -6,12 +6,12 @@
 struct EXECUTED_ORDER
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
-	uint64_t order_reference_number;
-	uint32_t executed_shares;
-	uint64_t match_number;
+	BigEndian<uint64_t> order_reference_number;
+	BigEndian<uint32_t> executed_shares;
+	BigEndian<uint64_t> match_number;
 };
 #pragma pack(pop)
 
@@ -19,14 +19,14 @@ struct EXECUTED_ORDER
 struct EXECUTED_ORDER_PRICE_MESSAGE
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
-	uint64_t order_reference_number;
-	uint32_t executed_shares;
-	uint64_t match_number;
+	BigEndian<uint64_t> order_reference_number;
+	BigEndian<uint32_t> executed_shares;
+	BigEndian<uint64_t> match_number;
 	char printable;
-	ITCHPrice4 execution_price;
+	BigEndian<uint32_t> execution_price;
 };
 #pragma pack(pop)
 
@@ -34,11 +34,11 @@ struct EXECUTED_ORDER_PRICE_MESSAGE
 struct CANCELLED_ORDER
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
-	uint64_t order_reference_number;
-	uint32_t cancelled_shared;
+	BigEndian<uint64_t> order_reference_number;
+	BigEndian<uint32_t> cancelled_shared;
 };
 #pragma pack(pop)
 
@@ -46,10 +46,10 @@ struct CANCELLED_ORDER
 struct DELETED_ORDER
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
-	uint64_t order_reference_number;
+	BigEndian<uint64_t> order_reference_number;
 };
 #pragma pack(pop)
 
@@ -57,13 +57,13 @@ struct DELETED_ORDER
 struct REPLACE_ORDER
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
-	uint64_t original_order_reference_number;
-	uint64_t new_order_reference_number;
-	uint32_t shares;
-	ITCHPrice4 price;
+	BigEndian<uint64_t> original_order_reference_number;
+	BigEndian<uint64_t> new_order_reference_number;
+	BigEndian<uint32_t> shares;
+	BigEndian<uint32_t> price;
 };
 #pragma pack(pop)
 

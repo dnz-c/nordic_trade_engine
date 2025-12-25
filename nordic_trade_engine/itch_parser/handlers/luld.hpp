@@ -5,14 +5,14 @@
 struct LULD_ACTION_COLLAR
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
 	char stock[8];
-	ITCHPrice4 auction_collar_reference_price;
-	ITCHPrice4 upper_auction_collar_price;
-	ITCHPrice4 lower_auction_collar_price;
-	uint32_t auction_collar_extension;
+	BigEndian<uint32_t> auction_collar_reference_price;
+	BigEndian<uint32_t> upper_auction_collar_price;
+	BigEndian<uint32_t> lower_auction_collar_price;
+	BigEndian<uint32_t> auction_collar_extension;
 };
 #pragma pack(pop)
 

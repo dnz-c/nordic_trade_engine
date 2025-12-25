@@ -5,17 +5,17 @@
 struct DIRECT_LISTING_WITH_CAPITAL_RAISE_PRICE_DISCOVERY
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
 	char stock[8];
 	char open_eligibility_status;
-	ITCHPrice4 minimum_allowable_price;
-	ITCHPrice4 maximum_allowable_price;
-	ITCHPrice4 near_execution_price;
-	uint64_t near_execution_time;
-	ITCHPrice4 lower_price_range_collar;
-	ITCHPrice4 upper_price_range_collar;
+	BigEndian<uint32_t> minimum_allowable_price;
+	BigEndian<uint32_t> maximum_allowable_price;
+	BigEndian<uint32_t> near_execution_price;
+	BigEndian<uint64_t> near_execution_time;
+	BigEndian<uint32_t> lower_price_range_collar;
+	BigEndian<uint32_t> upper_price_range_collar;
 };
 #pragma pack(pop)
 

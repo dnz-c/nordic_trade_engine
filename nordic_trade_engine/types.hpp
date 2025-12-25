@@ -24,27 +24,16 @@ struct uint48_t
 #pragma pack(pop)
 
 #pragma pack(push, 1)
-struct ITCHPrice4
-{
-    uint32_t data; // big endian
+template <typename T>
+struct BigEndian {
+    T raw_value;
 
-    __forceinline std::pair<uint32_t, uint32_t> get_whole_dec() const 
-    {
-        uint32_t host_price = _byteswap_ulong(data);
-        return std::make_pair<uint32_t, uint32_t>(host_price / 10000, host_price % 10000);
-    }
-};
-#pragma pack(pop)
-
-#pragma pack(push, 1)
-struct ITCHPrice8
-{
-    uint64_t data;
-
-    __forceinline std::pair<uint64_t, uint64_t> get_whole_dec() const
-    {
-        uint64_t host_price = _byteswap_uint64(data);
-        return { host_price / 100000000, host_price % 100000000 };
+    // Implicit conversion operator: Allows you to treat this struct as a normal number
+    operator T() const {
+        if constexpr (sizeof(T) == 2) return _byteswap_ushort(raw_value);
+        if constexpr (sizeof(T) == 4) return _byteswap_ulong(raw_value);
+        if constexpr (sizeof(T) == 8) return _byteswap_uint64(raw_value);
+        return raw_value;
     }
 };
 #pragma pack(pop)

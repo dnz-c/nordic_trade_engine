@@ -5,15 +5,15 @@
 struct TRADE_MESSAGE
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
-	uint64_t order_reference_number;
+	BigEndian<uint64_t> order_reference_number;
 	char buy_sell_indicator;
-	uint32_t shares;
+	BigEndian<uint32_t> shares;
 	char stock[8];
-	ITCHPrice4 price;
-	uint64_t match_number;
+	BigEndian<uint32_t> price;
+	BigEndian<uint64_t> match_number;
 };
 #pragma pack(pop)
 
@@ -21,15 +21,15 @@ struct TRADE_MESSAGE
 struct CROSS_TRADE_MESSAGE
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
-	uint64_t order_reference_number;
+	BigEndian<uint64_t> order_reference_number;
 	char buy_sell_indicator;
-	uint32_t shares;
+	BigEndian<uint32_t> shares;
 	char stock[8];
-	ITCHPrice4 price;
-	uint64_t match_number;
+	BigEndian<uint32_t> price;
+	BigEndian<uint64_t> match_number;
 	char cross_type;
 };
 #pragma pack(pop)

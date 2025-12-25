@@ -5,8 +5,8 @@
 struct MARKET_PARTICIPANT_POSITION_MESSAGE
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
 	char mpid[4];
 	char stock[8];

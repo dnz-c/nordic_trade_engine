@@ -5,8 +5,8 @@
 struct OPERATIONAL_HALT
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
 	char stock[8];
 	char market_code;

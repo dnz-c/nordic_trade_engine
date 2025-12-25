@@ -5,8 +5,8 @@
 struct REG_SHO_SHORT_SALE_PRICE_TEST_RESTRICTED_INDICATOR
 {
 	char message_type;
-	uint16_t locate_code;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> locate_code;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
 	char stock[8];
 	char reg_sho_action;

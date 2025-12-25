@@ -5,10 +5,10 @@
 struct BROKEN_TRADE
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
-	uint64_t match_number;
+	BigEndian<uint64_t> match_number;
 };
 #pragma pack(pop)
 
@@ -16,16 +16,16 @@ struct BROKEN_TRADE
 struct NOII
 {
 	char message_type;
-	uint16_t stock_locate;
-	uint16_t tracking_number;
+	BigEndian<uint16_t> stock_locate;
+	BigEndian<uint16_t> tracking_number;
 	uint48_t timestamp;
-	uint64_t paired_shares;
-	uint64_t imbalance_shares;
+	BigEndian<uint64_t> paired_shares;
+	BigEndian<uint64_t> imbalance_shares;
 	char imbalance_direction;
 	char stock[8];
-	ITCHPrice4 far_price;
-	ITCHPrice4 near_price;
-	ITCHPrice4 current_reference_price;
+	BigEndian<uint32_t> far_price;
+	BigEndian<uint32_t> near_price;
+	BigEndian<uint32_t> current_reference_price;
 	char cross_type;
 	char price_variation_indicator;
 

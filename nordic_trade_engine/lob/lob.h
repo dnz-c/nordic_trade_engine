@@ -3,7 +3,8 @@
 #include <map>
 #include <unordered_map>
 
-struct ORDER {
+struct ORDER 
+{
     uint64_t id;
     uint64_t shares;
     uint32_t price;
@@ -11,29 +12,119 @@ struct ORDER {
     ORDER* prev;
 };
 
-struct LIMIT_LEVEL {
-    uint32_t price;
-    uint64_t total_volume;
-    ORDER* head;
-    ORDER* tail;
+struct LIMIT_LEVEL 
+{
+    uint32_t price = 0;
+    uint64_t total_volume = 0;
+    ORDER* head = nullptr;
+    ORDER* tail = nullptr;
 };
+
+// TODO: This still allocates internally use custom std::map allocators (std::pmr::monotonic_buffer_resource)
+class ORDER_POOL 
+{
+private:
+    std::vector<ORDER> block_memory;
+    std::vector<ORDER*> free_list;
+
+public:
+    ORDER_POOL() : ORDER_POOL(0) {}
+
+    ORDER_POOL(size_t size)
+    {
+        block_memory.resize(size); // memory block itself
+        free_list.reserve(size);
+
+        for (size_t i = 0; i < size; i++) 
+        {
+            free_list.push_back(&block_memory[i]);
+        }
+    }
+
+    ORDER* rent_order() 
+    {
+        if (free_list.empty()) 
+        {
+            throw std::runtime_error("OOM: Order Pool Exhausted");
+            system("pause");
+            exit(-10);
+        }
+        ORDER* o = free_list.back();
+        free_list.pop_back();
+        return o;
+    }
+
+    void return_order(ORDER* o) 
+    {
+        o->shares = 0;
+        o->price = 0;
+        free_list.push_back(o);
+    }
+};
+
+struct SIDE_BID {};
+struct SIDE_ASK {};
 
 class LIMIT_ORDER_BOOK 
 {
 private:
+    ORDER_POOL& pool;
     std::string symbol;
     std::unordered_map<uint64_t, ORDER*> order_map;
-    std::map<uint32_t, LIMIT_LEVEL> bids;
+    std::map<uint32_t, LIMIT_LEVEL, std::greater<uint32_t>> bids;
     std::map<uint32_t, LIMIT_LEVEL> asks;
 
-public:
-    LIMIT_ORDER_BOOK(std::string ticker) : symbol(ticker) {}
+private:
+    __forceinline void link_order(LIMIT_LEVEL& level, ORDER* order);
 
-    void add_order(uint64_t id, bool is_buy, uint32_t price, uint32_t shares);
+public:
+    LIMIT_ORDER_BOOK(std::string ticker, ORDER_POOL& p) : symbol(ticker), pool(p) {}
+
+    template <typename SIDE>
+    void add_order(uint64_t id, uint32_t price, uint32_t shares);
+
+    template <>
+    __forceinline void add_order<SIDE_BID>(uint64_t id, uint32_t price, uint32_t shares)
+    {
+        ORDER* o = pool.rent_order();
+
+        o->id = id;
+        o->shares = shares;
+        o->price = price;
+
+        order_map[id] = o;
+
+        LIMIT_LEVEL& level = bids[price];
+
+        //link_order(level, o);
+    }
+
+    template <>
+    __forceinline void add_order<SIDE_ASK>(uint64_t id, uint32_t price, uint32_t shares)
+    {
+        ORDER* o = pool.rent_order();
+
+        o->id = id;
+        o->shares = shares;
+        o->price = price;
+
+        order_map[id] = o;
+
+        LIMIT_LEVEL& level = asks[price];
+
+        //link_order(level, o);
+    }
+
     void execute_order(uint64_t id, uint32_t executed_shares);
     void cancel_order(uint64_t id, uint32_t cancelled_shares);
 
     void print_top_of_book();
+
+public:
+    std::string get_symbol()
+    {
+        return symbol;
+    }
 };
 
 class MARKET {
