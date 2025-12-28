@@ -44,7 +44,7 @@ namespace add_order_no_mpid
 		if (order->buy_sell_indicator == 'B') book->add_order<SIDE_BID>(order->order_reference_number, order->price, order->shares);
 		else book->add_order<SIDE_ASK>(order->order_reference_number, order->price, order->shares);
 
-		book->simulate_order<SIDE_ASK>(order->price, 1000);
+		book->simulate_order<SIDE_ASK>(order->price, order->shares);
 	}
 }
 

@@ -101,8 +101,12 @@ public:
         LIMIT_LEVEL& level = asks[price];
         o->parent = &level;
 
+        uint64_t volume_ahead = level.total_volume;
         link_order(level, o);
-        level.shares_till_executed.push_back(std::pair<uint64_t, ORDER*>(level.total_volume, o));
+
+        level.shares_till_executed.emplace_back(volume_ahead, o);
+
+        std::cout << "[SIM] Placed ASK @" << price << " behind " << volume_ahead << " shares." << std::endl;
     }
 
     template <>
@@ -115,8 +119,12 @@ public:
         LIMIT_LEVEL& level = bids[price];
         o->parent = &level;
 
-        link_order(level, o);
-        level.shares_till_executed.push_back(std::pair<uint64_t, ORDER*>(level.total_volume, o));
+        uint64_t volume_ahead = level.total_volume;
+        link_order(level, o); 
+
+        level.shares_till_executed.emplace_back(volume_ahead, o);
+        
+        std::cout << "[SIM] Placed BID @" << price << " behind " << volume_ahead << " shares." << std::endl;
     }
 
     template <typename SIDE>

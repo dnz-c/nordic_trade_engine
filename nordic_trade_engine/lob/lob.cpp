@@ -63,29 +63,27 @@ void LIMIT_ORDER_BOOK::execute_order(uint64_t id, uint32_t executed_shares)
 
     ORDER* o = it->second;
 
-    // order overfilled
-    if (executed_shares > o->shares) 
-    {
-        o->shares = 0;
-    }
-    else 
-    {
-        o->shares -= executed_shares;
-    }
+    uint32_t actual_execution = (executed_shares > o->shares) ? o->shares : executed_shares;
+    o->shares -= actual_execution;
+    o->parent->total_volume -= actual_execution;
 
-    o->parent->total_volume -= executed_shares;
+    auto& sim_queue = o->parent->shares_till_executed;
 
-    for (auto it = o->parent->shares_till_executed.begin(); it != o->parent->shares_till_executed.end();)
+    for (auto it = sim_queue.begin(); it != sim_queue.end();)
     {
-        it->first -= executed_shares;
-        if (it->first <= 0)
+        it->first -= actual_execution;
+
+        if (reinterpret_cast<int64_t&>(it->first) <= 0)
         {
-            std::cout << "Executed order @ " << o->price << std::endl;
-            it++;
-            o->parent->shares_till_executed.erase(it--);
-            continue;
+            ORDER* sim_order = it->second;
+            std::cout << "[SIM] !!! FILL !!! Order executed at " << o->parent << " [PRICE " << o->price << "]" << std::endl;
+
+            it = sim_queue.erase(it);
         }
-        it++;
+        else
+        {
+            ++it;
+        }
     }
 
     if (o->shares == 0)
