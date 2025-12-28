@@ -75,6 +75,19 @@ void LIMIT_ORDER_BOOK::execute_order(uint64_t id, uint32_t executed_shares)
 
     o->parent->total_volume -= executed_shares;
 
+    for (auto it = o->parent->shares_till_executed.begin(); it != o->parent->shares_till_executed.end();)
+    {
+        it->first -= executed_shares;
+        if (it->first <= 0)
+        {
+            std::cout << "Executed order @ " << o->price << std::endl;
+            it++;
+            o->parent->shares_till_executed.erase(it--);
+            continue;
+        }
+        it++;
+    }
+
     if (o->shares == 0)
     {
         unlink_order(o);

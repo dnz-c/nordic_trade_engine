@@ -2,6 +2,7 @@
 #include <string>
 #include <map>
 #include <unordered_map>
+#include <vector>
 
 struct LIMIT_LEVEL;
 
@@ -19,6 +20,7 @@ struct ORDER
 struct LIMIT_LEVEL 
 {
     uint64_t total_volume = 0;
+    std::vector<std::pair<uint64_t, ORDER*>> shares_till_executed;
     ORDER* head = nullptr;
     ORDER* tail = nullptr;
 };
@@ -85,6 +87,37 @@ private:
 
 public:
     LIMIT_ORDER_BOOK(std::string ticker, ORDER_POOL& p) : symbol(ticker), pool(p) {}
+
+    template <typename SIDE>
+    void simulate_order(uint32_t price, uint32_t shares);
+
+    template <>
+    void simulate_order<SIDE_ASK>(uint32_t price, uint32_t shares)
+    {
+        ORDER* o = pool.rent_order();
+        o->price = price;
+        o->shares = shares;
+
+        LIMIT_LEVEL& level = asks[price];
+        o->parent = &level;
+
+        link_order(level, o);
+        level.shares_till_executed.push_back(std::pair<uint64_t, ORDER*>(level.total_volume, o));
+    }
+
+    template <>
+    void simulate_order<SIDE_BID>(uint32_t price, uint32_t shares)
+    {
+        ORDER* o = pool.rent_order();
+        o->price = price;
+        o->shares = shares;
+
+        LIMIT_LEVEL& level = bids[price];
+        o->parent = &level;
+
+        link_order(level, o);
+        level.shares_till_executed.push_back(std::pair<uint64_t, ORDER*>(level.total_volume, o));
+    }
 
     template <typename SIDE>
     void add_order(uint64_t id, uint32_t price, uint32_t shares);
